@@ -33,6 +33,10 @@ body {
   padding-top: 100px;
   padding-bottom: 100px;
 }
+.py-40 {
+  padding-top: 20px;
+  padding-bottom: 240px;
+}
 .py-10 {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -86,14 +90,17 @@ body {
   display: inline;
   padding: 20px 20px;
 }
-.active {
-  color: #000000;
-  font-weight: bold;
-}
-.navbar > li > a {
+
+.navlink {
   text-decoration: none;
   color: #676565;
   opacity: 0.65;
+}
+
+.active {
+  font-weight: bold;
+  color: #000000;
+  opacity: 1;
 }
 
 .section-container {
@@ -214,4 +221,16 @@ body {
   border-radius: 5px;
   border: none;
   font-family: "Quicksand", sans-serif;
+}
+.footer-social {
+  text-decoration: none;
+}
+.footer-socio {
+  color: #ffffff;
+  font-size: 25px;
+  padding-right: 20px;
+}
+
+.bg-white {
+  background-color: #fff;
 }
