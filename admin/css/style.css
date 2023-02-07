@@ -1,0 +1,157 @@
+body {
+  margin: 0;
+  font-family: "Quicksand", sans-serif;
+}
+
+.container {
+  max-width: 1344px;
+  width: 70%;
+  margin: 0 auto;
+}
+.container-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar {
+  display: flex;
+  list-style: none;
+}
+.brand-logo {
+  font-size: 2rem;
+  font-family: "Iceberg", cursive;
+}
+.navbar li {
+  margin-left: 2em;
+}
+.navlink {
+  text-decoration: none;
+  color: #676565;
+  opacity: 0.65;
+}
+.active {
+  font-weight: bold;
+  color: #000000;
+  opacity: 1;
+}
+.section-title {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.btn-default {
+  width: 249px;
+  height: 62px;
+  background-color: #3d4255;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-family: "Quicksand", sans-serif;
+}
+.col {
+  width: 30%;
+}
+.col img {
+  max-width: 100%;
+}
+.read_more {
+  text-decoration: none;
+  color: #000000;
+  font-weight: bold;
+}
+.btn-edit {
+  color: #000000;
+  margin-left: 1em;
+  font-size: 1.3rem;
+}
+.btn-delete {
+  color: #c20000;
+  margin-left: 1em;
+  font-size: 1.3rem;
+}
+.mt-20 {
+  margin-top: 3em;
+}
+.mb-20 {
+  margin-bottom: 3em;
+}
+.text-center {
+  text-align: center;
+}
+.input-control {
+  border: #ededed solid 2px;
+  border-radius: 5px;
+  width: 545px;
+  height: 42px;
+  padding-left: 20px;
+  font-family: "Quicksand", sans-serif;
+  margin-bottom: 20px;
+}
+.input-textarea {
+  border: #ededed solid 2px;
+  border-radius: 5px;
+  width: 545px;
+  padding-left: 20px;
+  padding-top: 20px;
+  font-family: "Quicksand", sans-serif;
+  margin-bottom: 20px;
+}
+.container-center {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.float-right {
+  float: right;
+}
+.btn-back {
+  text-decoration: none;
+  color: #000000;
+}
+html {
+  height: 100vh;
+}
+.login-container {
+  background-color: #f8f8f8;
+  height: 100%;
+}
+.card-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.card {
+  background-color: #ffffff;
+  max-width: 544px;
+  padding: 3em;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.h-100 {
+  height: 100vh;
+}
+.w-50 {
+  width: 40%;
+}
+.w-100 {
+  width: 100%;
+}
+.pl-0 {
+  padding-left: 0;
+}
+input::-webkit-input-placeholder {
+  padding: 10px;
+}
+
+input::-moz-placeholder {
+  padding: 10px;
+}
+
+input:-ms-input-placeholder {
+  padding: 10px;
+}
+
+input:-moz-placeholder {
+  padding: 10px;
+}
