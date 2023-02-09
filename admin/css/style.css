@@ -155,3 +155,40 @@ input:-ms-input-placeholder {
 input:-moz-placeholder {
   padding: 10px;
 }
+.table {
+  border-left: #e4e4e4 solid 1px;
+}
+
+.table th {
+  border-right: #e4e4e4 solid 1px;
+  margin: 0;
+  padding: 1.5em;
+  border-bottom: #e4e4e4 solid 1px;
+  border-top: #e4e4e4 solid 1px;
+}
+.table td {
+  border-right: #e4e4e4 solid 1px;
+  padding: 1.5em;
+  border-bottom: #e4e4e4 solid 1px;
+}
+.table tr {
+  border-bottom: #e4e4e4 solid 1px;
+}
+.btn-reply {
+  background-color: #3d4255;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.3rem;
+  padding: 0.3em;
+}
+.btn-contact {
+  background-color: #c20000;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.3em;
+}
+.section-title span {
+  font-weight: normal;
+}
