@@ -24,7 +24,7 @@ body {
   font-size: 2rem;
   font-family: "Iceberg", cursive;
 }
-.navbar li {
+.ms-2 {
   margin-left: 2em;
 }
 .navlink {
@@ -92,7 +92,7 @@ body {
   margin-bottom: 20px;
 }
 .login-input {
-  width: 400px;
+  width: 94%;
 }
 .input-textarea {
   border: #ededed solid 2px;
@@ -102,6 +102,9 @@ body {
   padding-top: 20px;
   font-family: "Quicksand", sans-serif;
   margin-bottom: 20px;
+}
+.invalid {
+  border: #c20000 solid 2px;
 }
 .container-center {
   margin: 0 auto;
@@ -116,6 +119,30 @@ body {
 .login-container {
   background-color: #f8f8f8;
   height: 100%;
+}
+.d-none {
+  display: none;
+}
+.alert-danger {
+  background-color: #c20000;
+  color: #ffffff;
+  padding: 0.5em 0.5em;
+  border-radius: 7px;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.alert-danger button {
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  padding: 0.5em;
+}
+.alert-danger button:hover {
+  background-color: #630303;
 }
 /* Card CSS */
 .card-center {
@@ -143,7 +170,11 @@ body {
 .pl-0 {
   padding-left: 0;
 }
+
 /* Table CSS */
+.table-responsive {
+  overflow-x: auto;
+}
 .table {
   border-left: #e4e4e4 solid 1px;
 }
@@ -225,4 +256,60 @@ body {
 }
 .btn-back:hover {
   color: #4c567b;
+}
+@media (max-width: 930px) {
+  .container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    width: 100%;
+  }
+  .container-sm {
+    width: 90%;
+  }
+  .w-50 {
+    width: 73%;
+  }
+  .container-row {
+    flex-direction: column;
+  }
+  .col {
+    width: 80%;
+    margin-bottom: 2em;
+  }
+  .flex-row {
+    flex-direction: row;
+  }
+  .ms-0 {
+    margin-left: 0;
+  }
+  .navbar {
+    padding-left: 0;
+  }
+  .btn-delete {
+    margin-left: 0;
+    margin-top: 1em;
+  }
+  /* Display css */
+  .d-flex {
+    display: flex;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .align-normal {
+    align-items: normal;
+  }
+  .text-start {
+    text-align: start;
+  }
+  .input-textarea {
+    width: 94%;
+  }
+  .input-control {
+    width: 94%;
+  }
 }

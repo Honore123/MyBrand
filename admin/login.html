@@ -31,23 +31,35 @@
           Welcome back, <br />
           fill form below to continue
         </p>
-        <form action="" class="mt-20">
+        <div id="alert-danger" class="d-none">
+          <div class="alert-danger">
+            <p class="text-center">Wrong Credentials</p>
+            <button id="alert-close"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+
+        <form action="" class="mt-20" id="login-form">
           <input
             type="email"
+            id="email"
             placeholder="Email"
             class="input-control login-input"
             aria-placeholder="Email"
           />
           <input
             type="password"
+            id="password"
             placeholder="Password"
             class="input-control login-input"
             aria-placeholder="Password"
           />
 
-          <button class="btn btn-default mt-20 mb-20">LOGIN</button>
+          <button id="login-btn" class="btn btn-default mt-20 mb-20 w-100">
+            LOGIN
+          </button>
         </form>
       </div>
     </div>
+    <script src="./js/login.js"></script>
   </body>
 </html>
