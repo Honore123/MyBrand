@@ -13,6 +13,7 @@ body {
 }
 .container-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -102,6 +103,12 @@ body {
   padding-top: 20px;
   font-family: "Quicksand", sans-serif;
   margin-bottom: 20px;
+}
+.ql-toolbar {
+  width: 567px;
+}
+.ql-container {
+  width: 567px;
 }
 .invalid {
   border: #c20000 solid 2px;
@@ -223,6 +230,8 @@ body {
   font-size: 1.3rem;
   padding: 0.4em;
   border-radius: 5px;
+  border: none;
+  background: transparent;
 }
 .btn-delete:hover {
   background-color: #c20000;
@@ -311,5 +320,11 @@ body {
   }
   .input-control {
     width: 94%;
+  }
+  .ql-toolbar {
+    width: 100%;
+  }
+  .ql-container {
+    width: 100%;
   }
 }

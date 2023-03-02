@@ -23,7 +23,7 @@
     ></script>
     <title>Admin|Honore</title>
   </head>
-  <body>
+  <body onload="readMessage()">
     <nav>
       <div class="container container-row">
         <h4 class="brand-logo">Honore</h4>
@@ -33,7 +33,7 @@
             <a href="./contact.html" class="navlink active">Contact</a>
           </li>
           <li class="ms-2">
-            <a href="./login.html" class="navlink">Logout</a>
+            <a href="" onclick="logout()" class="navlink">Logout</a>
           </li>
         </ul>
       </div>
@@ -50,7 +50,7 @@
         <span>Subject: </span> Contract Offer
       </h3>
     </div>
-    <div class="container container-sm text-center">
+    <div class="container container-sm text-center" id="read-message-content">
       <div class="d-flex justify-between">
         <span>John Doe</span>
         <span>19/02/2023</span>
@@ -68,5 +68,7 @@ Message</textarea
         <button class="btn btn-default">SEND</button>
       </form>
     </div>
+    <script src="./js/contact.js"></script>
+    <script src="./js/login.js"></script>
   </body>
 </html>
