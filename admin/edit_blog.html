@@ -32,7 +32,7 @@
     ></script>
     <title>Admin|Honore</title>
   </head>
-  <body>
+  <body onload="editBlog()">
     <nav>
       <div class="container container-row">
         <h4 class="brand-logo">Honore</h4>
@@ -57,11 +57,12 @@
       </h4>
     </div>
     <div class="container">
-      <h3 class="section-title text-center">CREATE NEW Blog</h3>
+      <h3 class="section-title text-center">Edit Blog</h3>
     </div>
     <div class="container container-sm mt-20">
-      <form action="" class="container-center" id="blog-form">
+      <form action="" class="container-center">
         <img src="" class="img-fluid" id="preview-thumbnail" alt="" />
+        <input type="hidden" id="blog-id" />
         <input
           type="file"
           id="thumbnail"
@@ -79,7 +80,14 @@
         />
         <div id="editor"></div>
 
-        <button type="submit" class="btn btn-default mt-20">PUBLISH</button>
+        <button
+          type="button"
+          onclick="updateBlog()"
+          id="edit-blog-button"
+          class="btn btn-default mt-20"
+        >
+          PUBLISH
+        </button>
       </form>
     </div>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>

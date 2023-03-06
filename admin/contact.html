@@ -16,6 +16,11 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <link rel="stylesheet" href="./css/style.css" />
     <script
       src="https://kit.fontawesome.com/a35317108c.js"
@@ -23,7 +28,7 @@
     ></script>
     <title>Admin|Honore</title>
   </head>
-  <body>
+  <body onload="visitorMessages()">
     <nav>
       <div class="container container-row">
         <h4 class="brand-logo">Honore</h4>
@@ -31,7 +36,7 @@
           <li class="ms-0"><a href="./blog.html" class="navlink">Blog</a></li>
           <li class="ms-2"><a href="" class="navlink active">Contact</a></li>
           <li class="ms-2">
-            <a href="./login.html" class="navlink">Logout</a>
+            <a href="" onclick="logout()" class="navlink">Logout</a>
           </li>
         </ul>
       </div>
@@ -50,7 +55,7 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="messages-content">
           <tr>
             <td>1</td>
             <td>John Doe</td>
@@ -92,5 +97,11 @@
         </tbody>
       </table>
     </div>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script src="./js/contact.js"></script>
+    <script src="./js/login.js"></script>
   </body>
 </html>

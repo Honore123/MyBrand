@@ -18,6 +18,11 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <link rel="stylesheet" href="./css/style.css" />
     <script
       src="https://kit.fontawesome.com/a35317108c.js"
@@ -25,7 +30,7 @@
     ></script>
     <title>Honore</title>
   </head>
-  <body>
+  <body onload="blogHome()">
     <nav>
       <div class="container row justify-between align-items-center">
         <div class="d-flex justify-between align-center">
@@ -140,7 +145,7 @@
     <div class="bg-grey py-100">
       <div class="container">
         <div><h3 class="my-name fs-40 mb-40">Blog</h3></div>
-        <div class="row justify-between">
+        <div class="row justify-between" id="blog-content">
           <div class="col-30 mb-sm-60">
             <img class="img-fluid" src="./images/Rectangle 5.png" alt="" />
             <h4 class="blog-title">
@@ -223,13 +228,24 @@
               <div class="footer-icon">
                 <p>Follow me:</p>
                 <div>
-                  <a href="" class="footer-socials"
+                  <a
+                    href="https://twitter.com/IMANISHIMWEHon1"
+                    target="_blank"
+                    class="footer-socials"
                     ><i class="fab fa-twitter footer-socio"></i
                   ></a>
-                  <a href="" class="footer-socials">
+                  <a
+                    href="https://www.linkedin.com/in/imanishimwe-honore-4269a9169/"
+                    target="_blank"
+                    class="footer-socials"
+                  >
                     <i class="fab fa-linkedin footer-socio"></i
                   ></a>
-                  <a href="" class="footer-socials">
+                  <a
+                    href="https://www.instagram.com/imanishimwe_honore/"
+                    target="_blank"
+                    class="footer-socials"
+                  >
                     <i class="fab fa-instagram-square footer-socio"></i
                   ></a>
                 </div>
@@ -250,22 +266,24 @@
             </div>
           </div>
           <div class="col-45 mt-sm-50">
-            <form action="">
+            <form action="" id="contact-form">
               <input
                 type="text"
                 placeholder="Names"
+                id="names"
                 class="input-control float-right"
                 aria-placeholder="Names"
               /><br />
               <input
                 type="email"
                 placeholder="Email"
+                id="email"
                 class="input-control float-right"
                 aria-placeholder="Email"
               /><br />
               <textarea
-                name=""
-                id=""
+                name="message"
+                id="message"
                 cols="30"
                 rows="10"
                 class="input-textarea float-right"
@@ -273,12 +291,20 @@
     Messages</textarea
               >
               <br />
-              <button class="btn btn-light float-right">SUBMIT</button>
+              <button type="submit" class="btn btn-light float-right">
+                SUBMIT
+              </button>
             </form>
           </div>
         </div>
       </div>
     </footer>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
     <script src="./js/main.js"></script>
+    <script src="./js/blog.js"></script>
+    <script src="./js/contact.js"></script>
   </body>
 </html>

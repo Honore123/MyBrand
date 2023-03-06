@@ -10,11 +10,27 @@ loginForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const email = document.querySelector("#email");
   const password = document.querySelector("#password");
+  const loginUrl = "http://localhost:3000/blog?email=" + email.value;
   alertContainer.classList.remove("d-none");
   if (isValidEmail(email.value)) {
     email.classList.remove("invalid");
     if (isValidPassword(password.value)) {
       alertContainer.classList.add("d-none");
+      const loginUrl =
+        "http://localhost:3000/users?email=" +
+        email.value +
+        "&password=" +
+        password.value;
+      fetch(loginUrl)
+        .then((res) => res.json())
+        .then((response) => {
+          if (response[0].password == password.value) {
+            sessionStorage.setItem("email", response[0].email);
+            window.location.replace("./blog.html");
+          } else {
+            alertContainer.classList.remove("d-none");
+          }
+        });
     }
   } else {
     email.classList.add("invalid");
@@ -28,4 +44,9 @@ function isValidEmail(email) {
 
 function isValidPassword(password) {
   return password.length >= 8;
+}
+
+function logout() {
+  sessionStorage.clear();
+  window.location.replace("./login.html");
 }

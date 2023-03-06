@@ -19,13 +19,18 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <script
       src="https://kit.fontawesome.com/a35317108c.js"
       crossorigin="anonymous"
     ></script>
     <title>Honore</title>
   </head>
-  <body>
+  <body onload="readBlog()">
     <nav>
       <div class="container row justify-between align-items-center">
         <div class="d-flex justify-between align-center">
@@ -93,7 +98,7 @@
             ><i class="fas fa-chevron-left"></i> Back to Blog</a
           >
         </h4>
-        <div>
+        <div id="blog-content">
           <img class="img-fluid" src="./images/read_image.png" alt="" />
           <p class="mt-4 text-justify">
             Lorem ipsum dolor sit amet consectetur. Id faucibus placerat ac
@@ -125,23 +130,49 @@
             gravida convallis leo magnis vel hac in.
           </p>
         </div>
-        <div class="py-50">
+        <div class="py-50 border-bottom-default">
           <h4>Did you Joy it?</h4>
-          <h4>
-            <i class="far fa-thumbs-up"></i>
-          </h4>
+
+          <i class="far fa-thumbs-up fs-20" id="like-btn"></i>
         </div>
-        <div>
-          <form action="">
-            <textarea name="" id="" cols="30" rows="10" class="input-textarea">
-Leave a Comment</textarea
-            >
-            <br />
-            <button class="btn btn-default">PUBLISH</button>
-          </form>
+        <div class="py-50">
+          <h3 class="py-10">Leave a comments</h3>
+          <div>
+            <form action="" id="comment-form">
+              <input type="hidden" id="blog-id" />
+              <input
+                type="text"
+                class="input-control"
+                placeholder="Names"
+                id="names"
+              />
+              <textarea
+                name="comment"
+                id="comment"
+                cols="30"
+                rows="10"
+                class="input-textarea"
+              >
+Your Comment</textarea
+              >
+              <br />
+              <button type="submit" class="btn btn-default">PUBLISH</button>
+            </form>
+          </div>
+          <div id="comment-content">
+            <div class="border-bottom-default">
+              <h5>Honore Imanishimwe</h5>
+              <p class="fs-14">Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script src="./js/blog.js"></script>
     <script src="./js/main.js"></script>
   </body>
 </html>
