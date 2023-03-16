@@ -4,7 +4,7 @@
   "description": "mybrand_server",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "start": "node server.js"
   },
   "author": "Honore",
