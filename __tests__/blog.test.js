@@ -11,7 +11,7 @@ const blogData = {
   likes: 0,
   thumbnail: "public/images/honore.png",
 };
-
+jest.setTimeout(400000);
 describe("Blog", () => {
   beforeAll(async () => {
     await mongoose.connect(dbURI);

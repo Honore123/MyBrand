@@ -9,7 +9,7 @@ const authData = {
   email: "admin@honore.com",
   password: "password",
 };
-
+jest.setTimeout(400000);
 describe("Admin authentication", () => {
   beforeAll(async () => {
     await mongoose.connect(dbURI);

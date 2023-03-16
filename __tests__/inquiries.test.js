@@ -10,6 +10,7 @@ const queryData = {
   visitor_message: "Hello I am Honore I would like to work with you",
 };
 const queryId = "";
+jest.setTimeout(400000);
 describe("Inquiries", () => {
   beforeAll(async () => {
     await mongoose.connect(dbURI);

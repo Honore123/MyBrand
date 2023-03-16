@@ -9,7 +9,7 @@ const commentData = {
   names: "Honore",
   comment: "First comment",
 };
-
+jest.setTimeout(400000);
 describe("Comment on a blog", () => {
   beforeAll(async () => {
     await mongoose.connect(dbURI);
