@@ -16,7 +16,10 @@ const options = {
       version: "1.0.0",
       description: "API for Honore's MyBrand project mad with Express",
     },
-    servers: [{ url: "http://localhost:3000" }],
+    servers: [
+      { url: "http://localhost:3000" },
+      { url: "https://real-jade-katydid-fez.cyclic.app" },
+    ],
   },
   apis: ["./routes/*.js"],
 };
