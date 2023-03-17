@@ -15,7 +15,7 @@ module.exports.show = (req, res) => {
   Blog.findById(req.params.id)
     .then((blog) => {
       res.json({
-        data: blog,
+        data: [blog],
         status: 200,
         message: "blog fetched successfully",
       });
@@ -28,7 +28,7 @@ module.exports.store = (req, res) => {
     .save()
     .then((result) =>
       res.send({
-        data: result,
+        data: [result],
         status: 200,
         message: "blog created successfully",
       })

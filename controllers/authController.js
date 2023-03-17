@@ -50,7 +50,7 @@ module.exports.login = async (req, res) => {
     const token = createToken(user._id);
     res.cookie("jwt", token, { httOnly: true, maxAge: maxPeriod * 1000 });
     res.status(200).json({
-      data: { user: user._id },
+      data: [user],
       status: 200,
       message: "Logged successfully",
     });
