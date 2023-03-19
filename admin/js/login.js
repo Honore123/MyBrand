@@ -15,7 +15,7 @@ loginForm.addEventListener("submit", function (event) {
     email.classList.remove("invalid");
     if (isValidPassword(password.value)) {
       alertContainer.classList.add("d-none");
-      const loginUrl = "http://localhost:3000/login";
+      const loginUrl = "https://real-jade-katydid-fez.cyclic.app/login";
       fetch(loginUrl, {
         method: "POST",
         body: JSON.stringify({
