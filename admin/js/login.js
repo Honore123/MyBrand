@@ -18,6 +18,8 @@ loginForm.addEventListener("submit", function (event) {
       const loginUrl = "https://real-jade-katydid-fez.cyclic.app/login";
       fetch(loginUrl, {
         method: "POST",
+        mode: "cors",
+        credentials: "include",
         body: JSON.stringify({
           email: email.value,
           password: password.value,
@@ -30,8 +32,9 @@ loginForm.addEventListener("submit", function (event) {
         .then((res) => res.json())
         .then((response) => {
           if (response.status == 200) {
-            sessionStorage.setItem("email", response.data[0].email);
-            window.location.replace("./blog.html");
+            //sessionStorage.setItem("email", response.data[0].email);
+            //window.location.replace("./blog.html");
+            console.log("response");
           } else {
             alertContainer.classList.remove("d-none");
           }
