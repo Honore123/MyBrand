@@ -25,7 +25,12 @@ const options = {
   apis: ["./routes/*.js"],
 };
 const specs = swaggerJsDoc(options);
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://127.0.0.1:5500", "https://honore123.github.io"],
+    credentials: true,
+  })
+);
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
