@@ -67,11 +67,16 @@ blogForm.addEventListener("submit", function (event) {
       },
     }).showToast();
   } else {
-    const addBlogUrl = "http://localhost:3000/blog";
+    const addBlogUrl = "http://localhost:3000/blogs";
     const titleVal = title.value;
     fetch(addBlogUrl, {
       method: "POST",
-      body: JSON.stringify({ title: titleVal, content: content, thumbnail }),
+      body: JSON.stringify({
+        title: titleVal,
+        content: content,
+        thumbnail,
+        likes: 0,
+      }),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -79,7 +84,7 @@ blogForm.addEventListener("submit", function (event) {
     })
       .then((res) => res.json())
       .then((response) => {
-        if (response.id) {
+        if (response.status == 200) {
           Toastify({
             text: "Blog published successfully",
             duration: 3000,
@@ -97,7 +102,7 @@ blogForm.addEventListener("submit", function (event) {
           }, 1000);
         } else {
           Toastify({
-            text: "Error occured while publishing :(",
+            text: response.message,
             duration: 3000,
             newWindow: true,
             close: true,
@@ -129,12 +134,12 @@ function validateContent(content) {
 }
 
 function blogPage() {
-  const urlHome = "http://localhost:3000/blog";
+  const urlHome = "http://localhost:3000/blogs";
   fetch(urlHome)
     .then((res) => res.json())
     .then((response) => {
       let output = "";
-      response.forEach(function (blog) {
+      response.data.forEach(function (blog) {
         output += `<div class="col mb-20">
         <img src="${blog.thumbnail}" alt="" />
         <h4 class="blog-title">
@@ -149,8 +154,8 @@ function blogPage() {
             >Read More <i class="fas fa-long-arrow-alt-right"></i
           ></a>
           <div>
-            <a href="./edit_blog.html?title=${blog.title}" class="btn-edit"><i class="far fa-edit"></i></a>
-            <button id="delete-btn" class="btn-delete" onClick="deleteBlog('${blog.id}')"><i class="far fa-trash-alt"></i></button>
+            <a href="./edit_blog.html?id=${blog._id}" class="btn-edit"><i class="far fa-edit"></i></a>
+            <button id="delete-btn" class="btn-delete" onClick="deleteBlog('${blog._id}')"><i class="far fa-trash-alt"></i></button>
           </div>
         </div>
       </div>`;
@@ -164,19 +169,19 @@ function blogPage() {
 function editBlog() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const title = urlParams.get("title");
+  const id = urlParams.get("id");
   const editTitle = document.querySelector("#title");
   const editPreview = document.querySelector("#preview-thumbnail");
   const blogId = document.querySelector("#blog-id");
 
-  const readUrl = "http://localhost:3000/blog?title=" + title;
+  const readUrl = `http://localhost:3000/blogs/${id}`;
   fetch(readUrl)
     .then((res) => res.json())
     .then((response) => {
-      editTitle.value = response[0].title;
-      editPreview.setAttribute("src", response[0].thumbnail);
-      blogId.value = response[0].id;
-      quill.setText(response[0].content);
+      editTitle.value = response.data[0].title;
+      editPreview.setAttribute("src", response.data[0].thumbnail);
+      blogId.value = response.data[0]._id;
+      quill.setText(response.data[0].content);
     });
 }
 
