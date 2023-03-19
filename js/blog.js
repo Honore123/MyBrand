@@ -25,12 +25,12 @@ function blogHome() {
 }
 
 function blogPage() {
-  const urlHome = "http://localhost:3000/blog?_limit=6";
+  const urlHome = "http://localhost:3000/blogs";
   fetch(urlHome)
     .then((res) => res.json())
     .then((response) => {
       let output = "";
-      response.forEach(function (blog) {
+      response.data.forEach(function (blog) {
         output += `<div class="col-30 mb-sm-60 mb-50">
             <img class="img-fluid" src="${blog.thumbnail}" alt="" />
             <h4 class="blog-title">
@@ -40,7 +40,7 @@ function blogPage() {
              ${blog.content}
             </p>
       
-            <a href="./read_blog.html?title=${blog.title}" class="read-more"
+            <a href="./read_blog.html?id=${blog._id}" class="read-more"
               >Read More <i class="fas fa-long-arrow-alt-right"></i
             ></a>
           </div>`;
@@ -52,14 +52,14 @@ function blogPage() {
 function readBlog() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const title = urlParams.get("title");
+  const id = urlParams.get("id");
 
-  const readUrl = "http://localhost:3000/blog?title=" + title;
+  const readUrl = "http://localhost:3000/blogs/" + id;
   fetch(readUrl)
     .then((res) => res.json())
     .then((response) => {
       let output = "";
-      response.forEach(function (blog) {
+      response.data.forEach(function (blog) {
         output += `<img class="img-fluid" src="${blog.thumbnail}" alt="${blog.title}" />
         <p class="mt-4 text-justify">
          ${blog.content}
@@ -68,21 +68,21 @@ function readBlog() {
       document.getElementById("blog-content").innerHTML = output;
       const blogId = document.querySelector("#blog-id");
 
-      const { id, title } = response[0];
-      blogId.value = id;
-      fetchComments(id);
+      const { _id, title } = response.data[0];
+      blogId.value = _id;
+      fetchComments(_id);
       likeBtn.setAttribute("onclick", "likeBlog()");
     });
 }
 
 // fetch comments
 function fetchComments(blogId) {
-  const commentsUrl = `http://localhost:3000/comments?post_id=${blogId}`;
+  const commentsUrl = `http://localhost:3000/blogs/${blogId}/comments`;
   fetch(commentsUrl)
     .then((res) => res.json())
     .then((response) => {
       let output = "";
-      response.forEach(function (comment) {
+      response.data.forEach(function (comment) {
         output += ` <div class="border-bottom-default">
         <h5>${comment.names}</h5>
         <p class="fs-14">${comment.comment}</p>
@@ -129,12 +129,11 @@ commentForm.addEventListener("submit", function (event) {
       },
     }).showToast();
   } else {
-    const addCommentUrl = "http://localhost:3000/comments";
+    const addCommentUrl = `http://localhost:3000/blogs/${blogId.value}/comments`;
 
     fetch(addCommentUrl, {
       method: "POST",
       body: JSON.stringify({
-        post_id: blogId.value,
         names: names.value,
         comment: comment.value,
       }),
@@ -145,7 +144,7 @@ commentForm.addEventListener("submit", function (event) {
     })
       .then((res) => res.json())
       .then((response) => {
-        if (response.id) {
+        if (response.status == 200) {
           Toastify({
             text: "Comment added successfully",
             duration: 3000,
@@ -190,53 +189,45 @@ function validateContent(content) {
 function likeBlog() {
   const blogId = document.querySelector("#blog-id");
 
-  const readUrl = `http://localhost:3000/blog/${blogId.value}`;
-  fetch(readUrl)
+  const likeBlogUrl = `http://localhost:3000/blogs/${blogId.value}/likes`;
+  fetch(likeBlogUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  })
     .then((res) => res.json())
-    .then((blog) => {
-      const likeBlogUrl = `http://localhost:3000/blog/${blogId.value}`;
-
-      blog.likes++;
-      fetch(likeBlogUrl, {
-        method: "PUT",
-        body: JSON.stringify(blog),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((response) => {
-          if (response.id) {
-            Toastify({
-              text: "You liked this blog!",
-              duration: 3000,
-              newWindow: true,
-              close: true,
-              gravity: "top",
-              position: "center",
-              stopOnFocus: true,
-              style: {
-                background: "#00b09b",
-              },
-            }).showToast();
-            likeBtn.classList.remove("far", "fa-thumbs-up");
-            likeBtn.classList.add("fas", "fa-thumbs-up");
-            likeBtn.removeAttribute("onclick");
-          } else {
-            Toastify({
-              text: "Error occured while liking the blog :(",
-              duration: 3000,
-              newWindow: true,
-              close: true,
-              gravity: "top",
-              position: "center",
-              stopOnFocus: true,
-              style: {
-                background: "#c20000",
-              },
-            }).showToast();
-          }
-        });
+    .then((response) => {
+      if (response.status == 200) {
+        Toastify({
+          text: "You liked this blog!",
+          duration: 3000,
+          newWindow: true,
+          close: true,
+          gravity: "top",
+          position: "center",
+          stopOnFocus: true,
+          style: {
+            background: "#00b09b",
+          },
+        }).showToast();
+        likeBtn.classList.remove("far", "fa-thumbs-up");
+        likeBtn.classList.add("fas", "fa-thumbs-up");
+        likeBtn.removeAttribute("onclick");
+      } else {
+        Toastify({
+          text: "Error occured while liking the blog :(",
+          duration: 3000,
+          newWindow: true,
+          close: true,
+          gravity: "top",
+          position: "center",
+          stopOnFocus: true,
+          style: {
+            background: "#c20000",
+          },
+        }).showToast();
+      }
     });
 }

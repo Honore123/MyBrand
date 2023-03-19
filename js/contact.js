@@ -48,7 +48,7 @@ contactForm.addEventListener("submit", function (event) {
       },
     }).showToast();
   } else {
-    const addMessageUrl = "http://localhost:3000/messages";
+    const addMessageUrl = "http://localhost:3000/inquiries";
 
     fetch(addMessageUrl, {
       method: "POST",
@@ -64,7 +64,7 @@ contactForm.addEventListener("submit", function (event) {
     })
       .then((res) => res.json())
       .then((response) => {
-        if (response.id) {
+        if (response.status == 200) {
           Toastify({
             text: "Message sent successfully",
             duration: 3000,
