@@ -25,7 +25,7 @@ function blogHome() {
 }
 
 function blogPage() {
-  const urlHome = "http://localhost:3000/blogs";
+  const urlHome = "https://real-jade-katydid-fez.cyclic.app/blogs";
   fetch(urlHome)
     .then((res) => res.json())
     .then((response) => {
@@ -54,7 +54,7 @@ function readBlog() {
   const urlParams = new URLSearchParams(queryString);
   const id = urlParams.get("id");
 
-  const readUrl = "http://localhost:3000/blogs/" + id;
+  const readUrl = "https://real-jade-katydid-fez.cyclic.app/blogs/" + id;
   fetch(readUrl)
     .then((res) => res.json())
     .then((response) => {
@@ -77,7 +77,7 @@ function readBlog() {
 
 // fetch comments
 function fetchComments(blogId) {
-  const commentsUrl = `http://localhost:3000/blogs/${blogId}/comments`;
+  const commentsUrl = `https://real-jade-katydid-fez.cyclic.app/blogs/${blogId}/comments`;
   fetch(commentsUrl)
     .then((res) => res.json())
     .then((response) => {
@@ -129,7 +129,7 @@ commentForm.addEventListener("submit", function (event) {
       },
     }).showToast();
   } else {
-    const addCommentUrl = `http://localhost:3000/blogs/${blogId.value}/comments`;
+    const addCommentUrl = `https://real-jade-katydid-fez.cyclic.app/blogs/${blogId.value}/comments`;
 
     fetch(addCommentUrl, {
       method: "POST",
@@ -189,7 +189,7 @@ function validateContent(content) {
 function likeBlog() {
   const blogId = document.querySelector("#blog-id");
 
-  const likeBlogUrl = `http://localhost:3000/blogs/${blogId.value}/likes`;
+  const likeBlogUrl = `https://real-jade-katydid-fez.cyclic.app/blogs/${blogId.value}/likes`;
   fetch(likeBlogUrl, {
     method: "POST",
     headers: {

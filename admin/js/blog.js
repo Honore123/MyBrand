@@ -67,7 +67,7 @@ blogForm.addEventListener("submit", function (event) {
       },
     }).showToast();
   } else {
-    const addBlogUrl = "http://localhost:3000/blogs";
+    const addBlogUrl = "https://real-jade-katydid-fez.cyclic.app/blogs";
     const titleVal = title.value;
     fetch(addBlogUrl, {
       method: "POST",
@@ -134,7 +134,7 @@ function validateContent(content) {
 }
 
 function blogPage() {
-  const urlHome = "http://localhost:3000/blogs";
+  const urlHome = "https://real-jade-katydid-fez.cyclic.app/blogs";
   fetch(urlHome)
     .then((res) => res.json())
     .then((response) => {
@@ -174,7 +174,7 @@ function editBlog() {
   const editPreview = document.querySelector("#preview-thumbnail");
   const blogId = document.querySelector("#blog-id");
 
-  const readUrl = `http://localhost:3000/blogs/${id}`;
+  const readUrl = `https://real-jade-katydid-fez.cyclic.app/blogs/${id}`;
   fetch(readUrl)
     .then((res) => res.json())
     .then((response) => {
@@ -237,7 +237,7 @@ function updateBlog() {
       },
     }).showToast();
   } else {
-    const addBlogUrl = `http://localhost:3000/blog/${blogId}`;
+    const addBlogUrl = `https://real-jade-katydid-fez.cyclic.app/blog/${blogId}`;
     const titleVal = title.value;
     fetch(addBlogUrl, {
       method: "PUT",
@@ -285,7 +285,7 @@ function updateBlog() {
 
 // delete blog
 function deleteBlog(blogId) {
-  const addBlogUrl = `http://localhost:3000/blog/${blogId}`;
+  const addBlogUrl = `https://real-jade-katydid-fez.cyclic.app/blog/${blogId}`;
 
   fetch(addBlogUrl, {
     method: "DELETE",
