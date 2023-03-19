@@ -39,7 +39,7 @@ module.exports.store = (req, res) => {
     .save()
     .then((result) => {
       res.status(200).json({
-        data: result,
+        data: [result],
         status: 200,
         message: "Query sent successfully",
       });
