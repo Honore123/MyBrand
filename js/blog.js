@@ -1,13 +1,14 @@
+const baseUrl = "https://real-jade-katydid-fez.cyclic.app/blogs/";
 const likeBtn = document.querySelector("#like-btn");
 function blogHome() {
-  const urlHome = "http://localhost:3000/blog?_limit=3";
+  const urlHome = `${baseUrl}limit/${3}`;
   fetch(urlHome)
     .then((res) => res.json())
     .then((response) => {
       let output = "";
-      response.forEach(function (blog) {
+      response.data.forEach(function (blog) {
         output += `<div class="col-30 mb-sm-60">
-          <img class="img-fluid" src="${blog.thumbnail}" alt="" />
+          <img class="img-fluid" src="${baseUrl}/images/${blog.thumbnail}" alt="" />
           <h4 class="blog-title">
            ${blog.title}
           </h4>
@@ -15,7 +16,7 @@ function blogHome() {
            ${blog.content}
           </p>
     
-          <a href="./read_blog.html?title=${blog.title}" class="read-more"
+          <a href="./read_blog.html?id=${blog._id}" class="read-more"
             >Read More <i class="fas fa-long-arrow-alt-right"></i
           ></a>
         </div>`;
@@ -25,14 +26,14 @@ function blogHome() {
 }
 
 function blogPage() {
-  const urlHome = "https://real-jade-katydid-fez.cyclic.app/blogs";
+  const urlHome = baseUrl;
   fetch(urlHome)
     .then((res) => res.json())
     .then((response) => {
       let output = "";
       response.data.forEach(function (blog) {
         output += `<div class="col-30 mb-sm-60 mb-50">
-            <img class="img-fluid" src="${blog.thumbnail}" alt="" />
+            <img class="img-fluid" src="${baseUrl}/images/${blog.thumbnail}" alt="" />
             <h4 class="blog-title">
              ${blog.title}
             </h4>
@@ -54,13 +55,13 @@ function readBlog() {
   const urlParams = new URLSearchParams(queryString);
   const id = urlParams.get("id");
 
-  const readUrl = "https://real-jade-katydid-fez.cyclic.app/blogs/" + id;
+  const readUrl = baseUrl + id;
   fetch(readUrl)
     .then((res) => res.json())
     .then((response) => {
       let output = "";
       response.data.forEach(function (blog) {
-        output += `<img class="img-fluid" src="${blog.thumbnail}" alt="${blog.title}" />
+        output += `<img class="img-fluid" src="${baseUrl}/images/${blog.thumbnail}" alt="${blog.title}" />
         <p class="mt-4 text-justify">
          ${blog.content}
         </p>`;
@@ -77,7 +78,7 @@ function readBlog() {
 
 // fetch comments
 function fetchComments(blogId) {
-  const commentsUrl = `https://real-jade-katydid-fez.cyclic.app/blogs/${blogId}/comments`;
+  const commentsUrl = `${baseUrl}${blogId}/comments`;
   fetch(commentsUrl)
     .then((res) => res.json())
     .then((response) => {
@@ -129,7 +130,7 @@ commentForm.addEventListener("submit", function (event) {
       },
     }).showToast();
   } else {
-    const addCommentUrl = `https://real-jade-katydid-fez.cyclic.app/blogs/${blogId.value}/comments`;
+    const addCommentUrl = `${baseUrl}${blogId.value}/comments`;
 
     fetch(addCommentUrl, {
       method: "POST",
@@ -189,7 +190,7 @@ function validateContent(content) {
 function likeBlog() {
   const blogId = document.querySelector("#blog-id");
 
-  const likeBlogUrl = `https://real-jade-katydid-fez.cyclic.app/blogs/${blogId.value}/likes`;
+  const likeBlogUrl = `${baseUrl}${blogId.value}/likes`;
   fetch(likeBlogUrl, {
     method: "POST",
     headers: {

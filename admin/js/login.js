@@ -32,9 +32,8 @@ loginForm.addEventListener("submit", function (event) {
         .then((res) => res.json())
         .then((response) => {
           if (response.status == 200) {
-            //sessionStorage.setItem("email", response.data[0].email);
-            //window.location.replace("./blog.html");
-            console.log("response");
+            localStorage.setItem("token", "Bearer " + response.data[1].token);
+            window.location.replace("./blog.html");
           } else {
             alertContainer.classList.remove("d-none");
           }
@@ -55,6 +54,6 @@ function isValidPassword(password) {
 }
 
 function logout() {
-  sessionStorage.clear();
+  localStorage.removeItem("token");
   window.location.replace("./login.html");
 }
