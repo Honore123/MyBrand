@@ -1,17 +1,23 @@
+const baseUrl = "https://real-jade-katydid-fez.cyclic.app/inquiries/";
+const token = localStorage.getItem("token");
 document.addEventListener("DOMContentLoaded", function () {
-  if (!sessionStorage.getItem("email")) {
+  if (!token) {
     window.location.replace("./login.html");
   }
 });
 
 // fetch all the visitor's messages
 function visitorMessages() {
-  const urlMessages = "http://localhost:3000/messages";
-  fetch(urlMessages)
+  const urlMessages = baseUrl;
+  fetch(urlMessages, {
+    headers: {
+      Authorization: token,
+    },
+  })
     .then((res) => res.json())
     .then((response) => {
       let output = "";
-      response.forEach(function (visitor, index) {
+      response.data.forEach(function (visitor, index) {
         output += `
         <tr>
             <td>${index + 1}</td>
@@ -23,13 +29,13 @@ function visitorMessages() {
             <td>
               <div class="container-row">
                 <a href="./reply_contact.html?id=${
-                  visitor.id
+                  visitor._id
                 }" class="btn-reply">
                   <i class="fas fa-reply-all"></i>
                 </a>
-                <button class="btn-delete btn-contact" onclick="deleteMessage(${
-                  visitor.id
-                })">
+                <button class="btn-delete btn-contact" onclick="deleteMessage('${
+                  visitor._id
+                }')">
                   <i class="far fa-trash-alt"></i>
                 </button>
               </div>
@@ -47,12 +53,12 @@ function readMessage() {
   const urlParams = new URLSearchParams(queryString);
   const messageId = urlParams.get("id");
 
-  const readUrl = "http://localhost:3000/messages?id=" + messageId;
-  fetch(readUrl)
+  const readUrl = baseUrl + messageId;
+  fetch(readUrl, { headers: { Authorization: token } })
     .then((res) => res.json())
     .then((response) => {
       let output = "";
-      response.forEach(function (visitor) {
+      response.data.forEach(function (visitor) {
         output += `<div class="d-flex justify-between">
         <span>${visitor.visitor_names}</span>
         <span>19/02/2023</span>
@@ -67,12 +73,13 @@ function readMessage() {
 
 // delete Message
 function deleteMessage(messageId) {
-  const deleteMessageUrl = `http://localhost:3000/messages/${messageId}`;
+  const deleteMessageUrl = baseUrl + messageId;
 
   fetch(deleteMessageUrl, {
     method: "DELETE",
     headers: {
       Accept: "*/*",
+      Authorization: token,
     },
   })
     .then((res) => res.json())

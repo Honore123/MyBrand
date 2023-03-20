@@ -1,5 +1,7 @@
+const baseUrl = "https://real-jade-katydid-fez.cyclic.app/blogs/";
+const token = localStorage.getItem("token");
 document.addEventListener("DOMContentLoaded", function () {
-  if (!sessionStorage.getItem("email")) {
+  if (!token) {
     window.location.replace("./login.html");
   }
 });
@@ -67,19 +69,26 @@ blogForm.addEventListener("submit", function (event) {
       },
     }).showToast();
   } else {
-    const addBlogUrl = "https://real-jade-katydid-fez.cyclic.app/blogs";
+    const addBlogUrl = baseUrl;
     const titleVal = title.value;
-    fetch(addBlogUrl, {
-      method: "POST",
-      body: JSON.stringify({
+    let data = new FormData();
+    data.append("thumbnail", image.files[0]);
+    data.append(
+      "blog",
+      JSON.stringify({
         title: titleVal,
         content: content,
-        thumbnail,
+        thumbnail: image.files[0].name,
         likes: 0,
-      }),
+      })
+    );
+
+    fetch(addBlogUrl, {
+      method: "POST",
+      body: data,
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        Accept: "*/*",
+        authorization: token,
       },
     })
       .then((res) => res.json())
@@ -134,14 +143,14 @@ function validateContent(content) {
 }
 
 function blogPage() {
-  const urlHome = "https://real-jade-katydid-fez.cyclic.app/blogs";
+  const urlHome = baseUrl;
   fetch(urlHome)
     .then((res) => res.json())
     .then((response) => {
       let output = "";
       response.data.forEach(function (blog) {
         output += `<div class="col mb-20">
-        <img src="${blog.thumbnail}" alt="" />
+        <img src="${baseUrl}/images/${blog.thumbnail}" alt="" />
         <h4 class="blog-title">
           ${blog.title}
         </h4>
@@ -174,7 +183,7 @@ function editBlog() {
   const editPreview = document.querySelector("#preview-thumbnail");
   const blogId = document.querySelector("#blog-id");
 
-  const readUrl = `https://real-jade-katydid-fez.cyclic.app/blogs/${id}`;
+  const readUrl = baseUrl + id;
   fetch(readUrl)
     .then((res) => res.json())
     .then((response) => {
@@ -237,7 +246,7 @@ function updateBlog() {
       },
     }).showToast();
   } else {
-    const addBlogUrl = `https://real-jade-katydid-fez.cyclic.app/blog/${blogId}`;
+    const addBlogUrl = baseUrl + blogId;
     const titleVal = title.value;
     fetch(addBlogUrl, {
       method: "PUT",
@@ -245,11 +254,12 @@ function updateBlog() {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        authorization: token,
       },
     })
       .then((res) => res.json())
       .then((response) => {
-        if (response.id) {
+        if (response.status == 200) {
           Toastify({
             text: "Blog updated successfully",
             duration: 3000,
@@ -285,29 +295,45 @@ function updateBlog() {
 
 // delete blog
 function deleteBlog(blogId) {
-  const addBlogUrl = `https://real-jade-katydid-fez.cyclic.app/blog/${blogId}`;
+  const addBlogUrl = baseUrl + blogId;
 
   fetch(addBlogUrl, {
     method: "DELETE",
     headers: {
       Accept: "*/*",
+      authorization: token,
     },
   })
     .then((res) => res.json())
     .then((response) => {
-      Toastify({
-        text: "Blog deleted successfully",
-        duration: 3000,
-        newWindow: true,
-        close: true,
-        gravity: "top",
-        position: "center",
-        stopOnFocus: true,
-        style: {
-          background: "#00b09b",
-        },
-      }).showToast();
-      blogPage();
+      if (response.status == 200) {
+        Toastify({
+          text: "Blog deleted successfully",
+          duration: 3000,
+          newWindow: true,
+          close: true,
+          gravity: "top",
+          position: "center",
+          stopOnFocus: true,
+          style: {
+            background: "#00b09b",
+          },
+        }).showToast();
+        blogPage();
+      } else {
+        Toastify({
+          text: response.message,
+          duration: 3000,
+          newWindow: true,
+          close: true,
+          gravity: "top",
+          position: "center",
+          stopOnFocus: true,
+          style: {
+            background: "#c20000",
+          },
+        }).showToast();
+      }
     });
 }
 

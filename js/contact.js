@@ -48,7 +48,7 @@ contactForm.addEventListener("submit", function (event) {
       },
     }).showToast();
   } else {
-    const addMessageUrl = "http://localhost:3000/inquiries";
+    const addMessageUrl = "https://real-jade-katydid-fez.cyclic.app/inquiries";
 
     fetch(addMessageUrl, {
       method: "POST",
