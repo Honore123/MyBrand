@@ -1,4 +1,25 @@
 const Blog = require("../models/Blog");
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const imageFileFilter = (req, file, cb) => {
+  if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+    return cb(new Error("You can upload only image files!"), false);
+  }
+  cb(null, true);
+};
+
+module.exports.upload = multer({
+  storage: storage,
+  fileFilter: imageFileFilter,
+});
+
 module.exports.index = (req, res) => {
   Blog.find()
     .then((blogs) => {
@@ -22,8 +43,26 @@ module.exports.show = (req, res) => {
     })
     .catch((err) => console.log(err));
 };
+module.exports.fetchImage = (req, res) => {
+  res.sendFile(`./public/images/${req.params.image}`, { root: "." });
+};
+module.exports.fetchLimit = (req, res) => {
+  Blog.find()
+    .sort({ createAt: -1 })
+    .limit(req.params.number)
+    .then((blogs) => {
+      res.status(200).json({
+        data: blogs,
+        status: 200,
+        message: "blogs fetched successfully",
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
 module.exports.store = (req, res) => {
-  const blog = new Blog(req.body);
+  const blog = new Blog(JSON.parse(req.body.blog));
   blog
     .save()
     .then((result) =>
@@ -34,6 +73,20 @@ module.exports.store = (req, res) => {
       })
     )
     .catch((err) => console.log(err));
+};
+
+module.exports.update = (req, res) => {
+  Blog.updateOne({ _id: req.params.id }, { $set: req.body })
+    .then((result) => {
+      res.send({
+        data: [result],
+        status: 200,
+        message: "blog updated successfully",
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 module.exports.destroy = (req, res) => {

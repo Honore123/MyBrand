@@ -20,7 +20,7 @@ module.exports.show = (req, res) => {
   Inquiry.findById(req.params.id)
     .then((inquiry) => {
       res.status(200).json({
-        data: inquiry,
+        data: [inquiry],
         status: 200,
         message: "Query fetched successfully",
       });

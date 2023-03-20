@@ -51,6 +51,8 @@ inquiryRouter
    *  description: Queries managing APIs
    * /inquiries:
    *  post:
+   *   security:
+   *      - bearerAuth: []
    *   summary: Creating new query
    *   tags: [Inquiries]
    *   requestBody:
