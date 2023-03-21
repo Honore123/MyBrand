@@ -17,7 +17,8 @@ module.exports.index = (req, res) => {
 };
 
 module.exports.show = (req, res) => {
-  Inquiry.findById(req.params.id)
+  const { id } = req.params;
+  Inquiry.findById(id)
     .then((inquiry) => {
       res.status(200).json({
         data: [inquiry],
@@ -33,7 +34,8 @@ module.exports.show = (req, res) => {
 };
 
 module.exports.store = (req, res) => {
-  const inquiry = new Inquiry(req.body);
+  const { body } = req;
+  const inquiry = new Inquiry(body);
 
   inquiry
     .save()
@@ -49,4 +51,22 @@ module.exports.store = (req, res) => {
         .status(err.status)
         .json({ data: [], status: err.status, message: err.message })
     );
+};
+module.exports.destroy = (req, res) => {
+  const { id } = req.params;
+  Inquiry.findByIdAndDelete(id)
+    .then((result) => {
+      res
+        .status(200)
+        .json({
+          data: [result],
+          status: 200,
+          message: "Query deleted successfully",
+        });
+    })
+    .catch((err) => {
+      res
+        .status(err.status)
+        .json({ data: [], status: err.status, message: err.message });
+    });
 };

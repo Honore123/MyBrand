@@ -33,7 +33,8 @@ module.exports.index = (req, res) => {
 };
 
 module.exports.show = (req, res) => {
-  Blog.findById(req.params.id)
+  const { id } = req.params;
+  Blog.findById(id)
     .then((blog) => {
       res.json({
         data: [blog],
@@ -44,12 +45,14 @@ module.exports.show = (req, res) => {
     .catch((err) => console.log(err));
 };
 module.exports.fetchImage = (req, res) => {
-  res.sendFile(`./public/images/${req.params.image}`, { root: "." });
+  const { image } = req.params;
+  res.sendFile(`./public/images/${image}`, { root: "." });
 };
 module.exports.fetchLimit = (req, res) => {
+  const { number } = req.params;
   Blog.find()
     .sort({ createAt: -1 })
-    .limit(req.params.number)
+    .limit(number)
     .then((blogs) => {
       res.status(200).json({
         data: blogs,
@@ -76,7 +79,9 @@ module.exports.store = (req, res) => {
 };
 
 module.exports.update = (req, res) => {
-  Blog.updateOne({ _id: req.params.id }, { $set: req.body })
+  const { id } = req.params;
+  const { body } = req;
+  Blog.updateOne({ _id: id }, { $set: body })
     .then((result) => {
       res.send({
         data: [result],
@@ -90,7 +95,8 @@ module.exports.update = (req, res) => {
 };
 
 module.exports.destroy = (req, res) => {
-  Blog.findByIdAndDelete(req.params.id)
+  const { id } = req.params;
+  Blog.findByIdAndDelete(id)
     .then((result) =>
       res.json({
         data: result,
@@ -102,7 +108,8 @@ module.exports.destroy = (req, res) => {
 };
 
 module.exports.like = (req, res) => {
-  Blog.findById(req.params.blogId)
+  const { blogId } = req.params;
+  Blog.findById(blogId)
     .then((blog) => {
       if (blog != null) {
         blog.likes++;

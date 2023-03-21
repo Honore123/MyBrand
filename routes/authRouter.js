@@ -56,7 +56,7 @@ authRouter.post("/admin/signup", authController.signup);
  *                password:
  *                  type: string
  *              example:
- *                email: example@gmail.com
+ *                email: admin@honore.com
  *                password: password
  *   responses:
  *    200:

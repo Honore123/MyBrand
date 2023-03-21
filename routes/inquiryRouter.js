@@ -150,5 +150,51 @@ inquiryRouter
    *                status: 200
    *                message: "Query fetched successfully"
    */
-  .get(authMiddleware, inquiryController.show);
+  .get(authMiddleware, inquiryController.show)
+  /**
+   * @swagger
+   * tags:
+   *  name: Inquiries
+   *  description: Queries managing APIs
+   * /inquiries/{id}:
+   *  delete:
+   *   summary: delete a query by ID
+   *   tags: [Inquiries]
+   *   parameters:
+   *     - name: id
+   *       in: path
+   *       required: true
+   *       description: The ID of the query to be deleted.
+   *       schema:
+   *         type: string
+   *   responses:
+   *    200:
+   *      description: delet a query
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *                data:
+   *                  type: object
+   *                status:
+   *                  type: integer
+   *                message:
+   *                  type: string
+   *            example:
+   *                data:
+   *                    {
+   *                       "_id": "6408346dd82cffa860074200",
+   *                       "visitor_name": "John Doe",
+   *                       "visitor_email": "john@gmail.com",
+   *                       "visitor_message": "Hello there",
+   *                       "createdAt": "2023-03-08T07:08:29.851Z",
+   *                       "updatedAt": "2023-03-08T07:08:29.851Z",
+   *                       "__v": 0
+   *                   }
+   *
+   *                status: 200
+   *                message: "Query deleted successfully"
+   */
+  .delete(authMiddleware, inquiryController.destroy);
 module.exports = inquiryRouter;

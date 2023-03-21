@@ -256,6 +256,80 @@ blogRouter
     blogController.upload.single("thumbnail"),
     blogController.store
   )
+  /**
+   * @swagger
+   * tags:
+   *  name: Blog
+   *  description: Blog managing APIs
+   * /blogs/{id}:
+   *  put:
+   *   summary: Updating existing blog
+   *   tags: [Blog]
+   *   parameters:
+   *     - name: id
+   *       in: path
+   *       required: true
+   *       description: The id of a blog to be updated.
+   *       schema:
+   *         type: string
+   *   requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *              type: object
+   *              properties:
+   *                title:
+   *                  type: string
+   *                content:
+   *                  type: string
+   *                thumbnail:
+   *                  type: string
+   *              example:
+   *                title: "My blog title"
+   *                content:  "blog content"
+   *                thumbnail: "public/images/honore.png"
+   *   responses:
+   *    200:
+   *      description: List a blog
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *                data:
+   *                  type: object
+   *                status:
+   *                  type: integer
+   *                message:
+   *                  type: string
+   *            example:
+   *                data:
+   *                   {
+   *                      "acknowledged": true,
+   *                      "modifiedCount": 1,
+   *                      "upsertedId": null,
+   *                      "upsertedCount": 0,
+   *                      "matchedCount": 1
+   *                   }
+   *
+   *                status: 200
+   *                message: "blogs updated successfully"
+   *    400:
+   *      description: Authorization error
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *                status:
+   *                  type: integer
+   *                message:
+   *                  type: string
+   *            example:
+   *                status: 400
+   *                message: "You're not logged in"
+   */
   .put("/:id", authMiddleware, blogController.update)
   /**
    * @swagger
