@@ -1,7 +1,8 @@
 const Blog = require("../models/Blog");
 
 module.exports.index = (req, res, next) => {
-  Blog.findById(req.params.blogId)
+  const { blogId } = req.params;
+  Blog.findById(blogId)
     .then((blog) => {
       if (blog != null) {
         res.status(200).json({
@@ -18,7 +19,8 @@ module.exports.index = (req, res, next) => {
     });
 };
 module.exports.store = (req, res) => {
-  Blog.findById(req.params.blogId)
+  const { blogId } = req.params;
+  Blog.findById(blogId)
     .then((blog) => {
       if (blog != null) {
         blog.comment.push(req.body);

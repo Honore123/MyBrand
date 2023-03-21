@@ -42,6 +42,8 @@ blogRouter
    *  description: Blog managing APIs
    * /blogs:
    *  get:
+   *   security:
+   *      - bearerAuth: []
    *   summary: Fetch all blogs
    *   tags: [Blog]
    *   responses:
@@ -83,6 +85,8 @@ blogRouter
    *  description: Blog managing APIs
    * /blogs/{id}:
    *  get:
+   *   security:
+   *     - bearerAuth: []
    *   summary: Fetch a single blog by ID
    *   tags: [Blog]
    *   parameters:
@@ -123,7 +127,56 @@ blogRouter
    *                message: "blog fetched successfully"
    */
   .get("/:id", blogController.show)
-
+  /**
+   * @swagger
+   * tags:
+   *  name: Blog
+   *  description: Blog managing APIs
+   * /blogs/limit/{number}:
+   *  get:
+   *   security:
+   *     - bearerAuth: []
+   *   summary: Fetch a certain number of blogs
+   *   tags: [Blog]
+   *   parameters:
+   *     - name: number
+   *       in: path
+   *       required: true
+   *       description: The number of blogs to return.
+   *       schema:
+   *         type: string
+   *   responses:
+   *    200:
+   *      description: List blogs
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *                data:
+   *                  type: object
+   *                status:
+   *                  type: integer
+   *                message:
+   *                  type: string
+   *            example:
+   *                data:
+   *                    {
+   *                       "_id": "6408346dd82cffa860074200",
+   *                      "title": "My First Blog",
+   *                     "content": "hello there",
+   *                    "likes": 2,
+   *                       "thumbnail": "sdasdas",
+   *                       "createdAt": "2023-03-08T07:08:29.851Z",
+   *                       "updatedAt": "2023-03-08T07:08:29.851Z",
+   *                       "__v": 0
+   *                   }
+   *
+   *                status: 200
+   *                message: "blogs fetched successfully"
+   */
+  .get("/limit/:number", blogController.fetchLimit)
+  .get("/images/:image", blogController.fetchImage)
   /**
    * @swagger
    * tags:
@@ -197,7 +250,87 @@ blogRouter
    *                status: 400
    *                message: "You're not logged in"
    */
-  .post("/", authMiddleware, blogController.store)
+  .post(
+    "/",
+    authMiddleware,
+    blogController.upload.single("thumbnail"),
+    blogController.store
+  )
+  /**
+   * @swagger
+   * tags:
+   *  name: Blog
+   *  description: Blog managing APIs
+   * /blogs/{id}:
+   *  put:
+   *   summary: Updating existing blog
+   *   tags: [Blog]
+   *   parameters:
+   *     - name: id
+   *       in: path
+   *       required: true
+   *       description: The id of a blog to be updated.
+   *       schema:
+   *         type: string
+   *   requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *              type: object
+   *              properties:
+   *                title:
+   *                  type: string
+   *                content:
+   *                  type: string
+   *                thumbnail:
+   *                  type: string
+   *              example:
+   *                title: "My blog title"
+   *                content:  "blog content"
+   *                thumbnail: "public/images/honore.png"
+   *   responses:
+   *    200:
+   *      description: List a blog
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *                data:
+   *                  type: object
+   *                status:
+   *                  type: integer
+   *                message:
+   *                  type: string
+   *            example:
+   *                data:
+   *                   {
+   *                      "acknowledged": true,
+   *                      "modifiedCount": 1,
+   *                      "upsertedId": null,
+   *                      "upsertedCount": 0,
+   *                      "matchedCount": 1
+   *                   }
+   *
+   *                status: 200
+   *                message: "blogs updated successfully"
+   *    400:
+   *      description: Authorization error
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *                status:
+   *                  type: integer
+   *                message:
+   *                  type: string
+   *            example:
+   *                status: 400
+   *                message: "You're not logged in"
+   */
+  .put("/:id", authMiddleware, blogController.update)
   /**
    * @swagger
    * tags:
@@ -267,6 +400,8 @@ blogRouter
    *  description: Blog comment APIs
    * /blogs/{blogId}/comments:
    *  get:
+   *   security:
+   *     - bearerAuth: []
    *   summary: Fetch a single blog's comment by ID
    *   tags: [Blog Comment]
    *   parameters:
@@ -311,6 +446,8 @@ blogRouter
    *  description: Blog comment APIs
    * /blogs/{blogId}/comments:
    *  post:
+   *   security:
+   *    - bearerAuth: []
    *   summary: Creating new comment
    *   tags: [Blog Comment]
    *   parameters:
@@ -382,6 +519,8 @@ blogRouter
    *  description: Blog Like API
    * /blogs/{id}/likes:
    *  post:
+   *   security:
+   *     - bearerAuth: []
    *   summary: Like a blog
    *   tags: [Blog Like]
    *   parameters:

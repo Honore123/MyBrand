@@ -7,6 +7,7 @@ const authRouter = require("./routes/authRouter");
 const inquiryRouter = require("./routes/inquiryRouter");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
+const path = require("path");
 const app = express();
 
 const options = {
@@ -21,6 +22,20 @@ const options = {
       { url: "http://localhost:3000" },
       { url: "https://real-jade-katydid-fez.cyclic.app" },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   apis: ["./routes/*.js"],
 };
@@ -28,9 +43,11 @@ const specs = swaggerJsDoc(options);
 app.use(
   cors({
     origin: ["http://127.0.0.1:5500", "https://honore123.github.io"],
+    preflightContinue: true,
     credentials: true,
   })
 );
+app.use(express.static(path.resolve("./public")));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
