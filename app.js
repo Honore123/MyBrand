@@ -7,7 +7,6 @@ const authRouter = require("./routes/authRouter");
 const inquiryRouter = require("./routes/inquiryRouter");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
-const path = require("path");
 const app = express();
 
 const options = {
@@ -47,7 +46,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.static(path.resolve("./public")));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());

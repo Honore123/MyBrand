@@ -1,4 +1,6 @@
 const express = require("express");
+const multer = require("multer");
+const upload = multer();
 const blogController = require("../controllers/blogController");
 const commentController = require("../controllers/commentController");
 const { authMiddleware } = require("../middleware/authMiddleware");
@@ -176,7 +178,6 @@ blogRouter
    *                message: "blogs fetched successfully"
    */
   .get("/limit/:number", blogController.fetchLimit)
-  .get("/images/:image", blogController.fetchImage)
   /**
    * @swagger
    * tags:
@@ -250,11 +251,12 @@ blogRouter
    *                status: 400
    *                message: "You're not logged in"
    */
-  .post(
-    "/",
+  .post("/", authMiddleware, upload.single("thumbnail"), blogController.store)
+  .put(
+    "/update/image/:id",
     authMiddleware,
-    blogController.upload.single("thumbnail"),
-    blogController.store
+    upload.single("thumbnail"),
+    blogController.updateWithImage
   )
   /**
    * @swagger

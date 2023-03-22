@@ -1,24 +1,5 @@
 const Blog = require("../models/Blog");
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const imageFileFilter = (req, file, cb) => {
-  if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-    return cb(new Error("You can upload only image files!"), false);
-  }
-  cb(null, true);
-};
-
-module.exports.upload = multer({
-  storage: storage,
-  fileFilter: imageFileFilter,
-});
+const cloudinary = require("../utils/cloudinary");
 
 module.exports.index = (req, res) => {
   Blog.find()
@@ -44,10 +25,7 @@ module.exports.show = (req, res) => {
     })
     .catch((err) => console.log(err));
 };
-module.exports.fetchImage = (req, res) => {
-  const { image } = req.params;
-  res.sendFile(`./public/images/${image}`, { root: "." });
-};
+
 module.exports.fetchLimit = (req, res) => {
   const { number } = req.params;
   Blog.find()
@@ -65,17 +43,36 @@ module.exports.fetchLimit = (req, res) => {
     });
 };
 module.exports.store = (req, res) => {
-  const blog = new Blog(JSON.parse(req.body.blog));
-  blog
-    .save()
-    .then((result) =>
-      res.send({
-        data: [result],
-        status: 200,
-        message: "blog created successfully",
-      })
-    )
-    .catch((err) => console.log(err));
+  const file = req.file.buffer.toString("base64");
+  const uploadStr = "data:" + req.file.mimetype + ";base64," + file;
+  cloudinary.uploader
+    .upload(uploadStr, {
+      folder: "blog_images",
+    })
+    .then((result) => {
+      const { title, likes, content } = JSON.parse(req.body.blog);
+      const blog = new Blog({
+        title,
+        likes,
+        content,
+        thumbnail: result.secure_url,
+      });
+      blog
+        .save()
+        .then((result) =>
+          res.send({
+            data: [result],
+            status: 200,
+            message: "blog created successfully",
+          })
+        )
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => {
+      res
+        .status(err.status)
+        .json({ data: [], status: err.status, message: err.message });
+    });
 };
 
 module.exports.update = (req, res) => {
@@ -91,6 +88,38 @@ module.exports.update = (req, res) => {
     })
     .catch((err) => {
       console.log(err.message);
+    });
+};
+
+module.exports.updateWithImage = (req, res) => {
+  const { id } = req.params;
+  const file = req.file.buffer.toString("base64");
+  const uploadStr = "data:" + req.file.mimetype + ";base64," + file;
+  cloudinary.uploader
+    .upload(uploadStr, {
+      folder: "blog_images",
+    })
+    .then((result) => {
+      const { title, likes, content } = JSON.parse(req.body.blog);
+      Blog.updateOne(
+        { _id: id },
+        { $set: { title, content, thumbnail: result.secure_url } }
+      )
+        .then((data) => {
+          res.send({
+            data: [data],
+            status: 200,
+            message: "blog updated successfully",
+          });
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    })
+    .catch((err) => {
+      res
+        .status(err.status)
+        .json({ data: [], status: err.status, message: err.message });
     });
 };
 

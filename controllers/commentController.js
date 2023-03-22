@@ -6,7 +6,7 @@ module.exports.index = (req, res, next) => {
     .then((blog) => {
       if (blog != null) {
         res.status(200).json({
-          data: blog.comment,
+          data: blog.comment.reverse(),
           status: 200,
           message: "Comment fetched successfully",
         });

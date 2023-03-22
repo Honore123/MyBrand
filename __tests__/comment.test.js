@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const dbURI =
   "mongodb+srv://h01:zupwEr-nyxji4-pyzhoc@mybrand.drvbekc.mongodb.net/my-brand?retryWrites=true&w=majority";
-const blogId = "6418ad9da33b0ed807434603";
+const blogId = "641acfc85c62bd9084b33950";
 const commentData = {
   names: "Honore",
   comment: "First comment",
