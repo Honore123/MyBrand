@@ -50,7 +50,7 @@
     <div class="container row justify-between py-40 bg-white row-reverse">
       <div class="col-30">
         <h3 class="mb-50">Latest Blog</h3>
-        <div class="">
+        <div class="" id="blog-latest-content">
           <div class="row justify-between py-2 pt-0 border-bottom-default">
             <img
               src="./images/latest_blog_1.png"
@@ -98,38 +98,7 @@
             ><i class="fas fa-chevron-left"></i> Back to Blog</a
           >
         </h4>
-        <div id="blog-content">
-          <img class="img-fluid" src="./images/read_image.png" alt="" />
-          <p class="mt-4 text-justify">
-            Lorem ipsum dolor sit amet consectetur. Id faucibus placerat ac
-            lorem eleifend in eu aliquet malesuada. Enim feugiat in tortor non
-            tristique elementum laoreet consequat. Tortor donec id a risus.
-            Turpis vitae arcu amet morbi turpis congue ut. Condimentum habitasse
-            sed
-          </p>
-          <p class="mt-4 text-justify">
-            maecenas orci et sit id urna lobortis. Sed quis faucibus egestas
-            lorem vitae commodo placerat nulla. Sagittis viverra eu a molestie
-            ac euismod. Risus quam orci sit feugiat vitae praesent. Phasellus
-            gravida elementum habitasse id viverra integer pellentesque enim. Ut
-            ut pellentesque condimentum amet fermentum varius id viverra cursus.
-          </p>
-          <p class="mt-4 text-justify">
-            Adipiscing at pulvinar turpis lorem mattis id nulla. Elit mattis
-            accumsan sit non. Placerat diam etiam proin massa leo vulputate.
-            Arcu consequat aliquam dis enim consequat tellus amet. Faucibus urna
-            nibh integer ultrices eu viverra. Vitae auctor est ornare in
-            dignissim interdum in nibh. Eu arcu donec gravida dui turpis
-            fermentum sagittis ut. In blandit viverra nisi sit. Diam at sit id
-            enim. Justo porta scelerisque nullam ut neque odio volutpat. At dui
-            facilisis odio
-          </p>
-          <p class="text-justify">
-            lectus orci sociis. Arcu turpis lectus elit gravida sem. Laoreet
-            diam diam sit molestie vitae scelerisque praesent. Aliquam varius
-            gravida convallis leo magnis vel hac in.
-          </p>
-        </div>
+        <div id="blog-content"></div>
         <div class="py-50 border-bottom-default">
           <h4>Did you Joy it?</h4>
 
@@ -151,10 +120,9 @@
                 id="comment"
                 cols="30"
                 rows="10"
+                placeholder="Write comment"
                 class="input-textarea"
-              >
-Your Comment</textarea
-              >
+              ></textarea>
               <br />
               <button type="submit" class="btn btn-default">PUBLISH</button>
             </form>

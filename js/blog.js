@@ -8,12 +8,12 @@ function blogHome() {
       let output = "";
       response.data.forEach(function (blog) {
         output += `<div class="col-30 mb-sm-60">
-          <img class="img-fluid" src="${baseUrl}/images/${blog.thumbnail}" alt="" />
+          <img class="img-fluid" src="${blog.thumbnail}" alt="" />
           <h4 class="blog-title">
-           ${blog.title}
+           ${blog.title.substr(0, 58)}
           </h4>
           <p class="text-justify">
-           ${blog.content}
+           ${blog.content.substr(0, 143)}
           </p>
     
           <a href="./read_blog.html?id=${blog._id}" class="read-more"
@@ -25,6 +25,33 @@ function blogHome() {
     });
 }
 
+function blogReadLatest() {
+  const urlHome = `${baseUrl}limit/${3}`;
+  fetch(urlHome)
+    .then((res) => res.json())
+    .then((response) => {
+      let output = "";
+      response.data.forEach(function (blog, index) {
+        output += `<div class="row justify-between py-2 ${
+          index == 0 ? "pt-0" : ""
+        } border-bottom-default">
+        <img
+          src="${blog.thumbnail}"
+          alt=""
+          class="col-40 img-fluid"
+        />
+        <div class="col-55">
+          <p>${blog.title.substr(0, 12)}...</p>
+          <p class="text-justify">
+            ${blog.content.substr(0, 47)}...
+          </p>
+        </div>
+      </div>`;
+      });
+      document.getElementById("blog-latest-content").innerHTML = output;
+    });
+}
+
 function blogPage() {
   const urlHome = baseUrl;
   fetch(urlHome)
@@ -33,12 +60,12 @@ function blogPage() {
       let output = "";
       response.data.forEach(function (blog) {
         output += `<div class="col-30 mb-sm-60 mb-50">
-            <img class="img-fluid" src="${baseUrl}/images/${blog.thumbnail}" alt="" />
+            <img class="img-fluid" src="${blog.thumbnail}" alt="" />
             <h4 class="blog-title">
-             ${blog.title}
+             ${blog.title.substr(0, 58)}
             </h4>
             <p class="text-justify">
-             ${blog.content}
+             ${blog.content.substr(0, 143)} ...
             </p>
       
             <a href="./read_blog.html?id=${blog._id}" class="read-more"
@@ -51,6 +78,7 @@ function blogPage() {
 }
 
 function readBlog() {
+  blogReadLatest();
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const id = urlParams.get("id");
@@ -61,7 +89,7 @@ function readBlog() {
     .then((response) => {
       let output = "";
       response.data.forEach(function (blog) {
-        output += `<img class="img-fluid" src="${baseUrl}/images/${blog.thumbnail}" alt="${blog.title}" />
+        output += `<img class="img-fluid" src="${blog.thumbnail}" alt="${blog.title}" />
         <p class="mt-4 text-justify">
          ${blog.content}
         </p>`;
@@ -182,7 +210,7 @@ commentForm.addEventListener("submit", function (event) {
 });
 
 function validateContent(content) {
-  return content.length >= 8;
+  return content.length >= 3;
 }
 
 // Like blog

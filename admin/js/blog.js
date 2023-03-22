@@ -87,7 +87,6 @@ blogForm.addEventListener("submit", function (event) {
       method: "POST",
       body: data,
       headers: {
-        Accept: "*/*",
         authorization: token,
       },
     })
@@ -150,12 +149,12 @@ function blogPage() {
       let output = "";
       response.data.forEach(function (blog) {
         output += `<div class="col mb-20">
-        <img src="${baseUrl}/images/${blog.thumbnail}" alt="" />
+        <img src="${blog.thumbnail}" alt="" />
         <h4 class="blog-title">
-          ${blog.title}
+          ${blog.title.substr(0, 58)}
         </h4>
         <p>
-          ${blog.content}
+          ${blog.content.substr(0, 143)}
         </p>
 
         <div class="container-row flex-row">
@@ -163,8 +162,12 @@ function blogPage() {
             >Read More <i class="fas fa-long-arrow-alt-right"></i
           ></a>
           <div>
-            <a href="./edit_blog.html?id=${blog._id}" class="btn-edit"><i class="far fa-edit"></i></a>
-            <button id="delete-btn" class="btn-delete" onClick="deleteBlog('${blog._id}')"><i class="far fa-trash-alt"></i></button>
+            <a href="./edit_blog.html?id=${
+              blog._id
+            }" class="btn-edit"><i class="far fa-edit"></i></a>
+            <button id="delete-btn" class="btn-delete" onClick="deleteBlog('${
+              blog._id
+            }')"><i class="far fa-trash-alt"></i></button>
           </div>
         </div>
       </div>`;
@@ -206,7 +209,7 @@ function updateBlog() {
   const blogId = document.querySelector("#blog-id").value;
   const content = quill.getText();
 
-  if (!validateImage(image)) {
+  if (!validateImage(image) && image.files[0]) {
     Toastify({
       text: "Image type not supported",
       duration: 3000,
@@ -246,50 +249,108 @@ function updateBlog() {
       },
     }).showToast();
   } else {
-    const addBlogUrl = baseUrl + blogId;
     const titleVal = title.value;
-    fetch(addBlogUrl, {
-      method: "PUT",
-      body: JSON.stringify({ title: titleVal, content: content, thumbnail }),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        authorization: token,
-      },
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        if (response.status == 200) {
-          Toastify({
-            text: "Blog updated successfully",
-            duration: 3000,
-            newWindow: true,
-            close: true,
-            gravity: "top",
-            position: "center",
-            stopOnFocus: true,
-            style: {
-              background: "#00b09b",
-            },
-          }).showToast();
-          setTimeout(() => {
-            window.location.replace("./blog.html");
-          }, 1000);
-        } else {
-          Toastify({
-            text: "Error occured while updating :(",
-            duration: 3000,
-            newWindow: true,
-            close: true,
-            gravity: "top",
-            position: "center",
-            stopOnFocus: true,
-            style: {
-              background: "#c20000",
-            },
-          }).showToast();
-        }
-      });
+    if (image.files[0]) {
+      let data = new FormData();
+      data.append("thumbnail", image.files[0]);
+      data.append(
+        "blog",
+        JSON.stringify({
+          title: titleVal,
+          content: content,
+          thumbnail: image.files[0].name,
+        })
+      );
+      const updateImageBlogUrl = baseUrl + "update/image/" + blogId;
+      fetch(updateImageBlogUrl, {
+        method: "PUT",
+        body: data,
+        headers: {
+          authorization: token,
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.status == 200) {
+            Toastify({
+              text: "Blog updated successfully",
+              duration: 3000,
+              newWindow: true,
+              close: true,
+              gravity: "top",
+              position: "center",
+              stopOnFocus: true,
+              style: {
+                background: "#00b09b",
+              },
+            }).showToast();
+            setTimeout(() => {
+              window.location.replace("./blog.html");
+            }, 1000);
+          } else {
+            Toastify({
+              text: response.message,
+              duration: 3000,
+              newWindow: true,
+              close: true,
+              gravity: "top",
+              position: "center",
+              stopOnFocus: true,
+              style: {
+                background: "#c20000",
+              },
+            }).showToast();
+          }
+        });
+    } else {
+      const addBlogUrl = baseUrl + blogId;
+      fetch(addBlogUrl, {
+        method: "PUT",
+        body: JSON.stringify({
+          title: titleVal,
+          content: content,
+          thumbnail,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: token,
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.status == 200) {
+            Toastify({
+              text: "Blog updated successfully",
+              duration: 3000,
+              newWindow: true,
+              close: true,
+              gravity: "top",
+              position: "center",
+              stopOnFocus: true,
+              style: {
+                background: "#00b09b",
+              },
+            }).showToast();
+            setTimeout(() => {
+              window.location.replace("./blog.html");
+            }, 1000);
+          } else {
+            Toastify({
+              text: "Error occured while updating :(",
+              duration: 3000,
+              newWindow: true,
+              close: true,
+              gravity: "top",
+              position: "center",
+              stopOnFocus: true,
+              style: {
+                background: "#c20000",
+              },
+            }).showToast();
+          }
+        });
+    }
   }
 }
 
