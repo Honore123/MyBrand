@@ -18,6 +18,11 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <link rel="stylesheet" href="./css/style.css" />
     <script
       src="https://kit.fontawesome.com/a35317108c.js"
@@ -45,51 +50,7 @@
     <div class="mb-40">
       <div class="container">
         <div><h3 class="my-name fs-40 mb-40">Blog</h3></div>
-        <div class="row justify-between" id="blog-content">
-          <div class="col-30 mb-sm-60">
-            <img class="img-fluid" src="./images/Rectangle 5.png" alt="" />
-            <h4 class="blog-title">
-              Lorem ipsum dolor sit amet consectetur. Aliquet nisl vitae
-            </h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. in tincidunt. Orci mollis
-              amet vivamus eu sagittis scelerisque.Arcu odio sit pellentesque
-              facilisis....
-            </p>
-
-            <a href="./read_blog.html" class="read-more"
-              >Read More <i class="fas fa-long-arrow-alt-right"></i
-            ></a>
-          </div>
-          <div class="col-30 mb-sm-60">
-            <img class="img-fluid" src="./images/Rectangle 5-2.png" alt="" />
-            <h4 class="blog-title">
-              Lorem ipsum dolor sit amet consectetur. Aliquet nisl vitae
-            </h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. in tincidunt. Orci mollis
-              amet vivamus eu sagittis scelerisque.Arcu odio sit pellentesque
-              facilisis....
-            </p>
-            <a href="#" class="read-more"
-              >Read More <i class="fas fa-long-arrow-alt-right"></i
-            ></a>
-          </div>
-          <div class="col-30">
-            <img class="img-fluid" src="./images/Rectangle 5-3.png" alt="" />
-            <h4 class="blog-title">
-              Lorem ipsum dolor sit amet consectetur. Aliquet nisl vitae
-            </h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. in tincidunt. Orci mollis
-              amet vivamus eu sagittis scelerisque.Arcu odio sit pellentesque
-              facilisis....
-            </p>
-            <a href="#" class="read-more"
-              >Read More <i class="fas fa-long-arrow-alt-right"></i
-            ></a>
-          </div>
-        </div>
+        <div class="row justify-between" id="blog-content"></div>
       </div>
     </div>
     <footer class="footer" id="footer">
@@ -139,36 +100,44 @@
             </div>
           </div>
           <div class="col-45 mt-sm-50">
-            <form action="">
+            <form action="" id="contact-form">
               <input
                 type="text"
                 placeholder="Names"
+                id="names"
                 class="input-control float-right"
                 aria-placeholder="Names"
               /><br />
               <input
                 type="email"
                 placeholder="Email"
+                id="email"
                 class="input-control float-right"
                 aria-placeholder="Email"
               /><br />
               <textarea
-                name=""
-                id=""
+                name="message"
+                id="message"
+                placeholder="Your message"
                 cols="30"
                 rows="10"
                 class="input-textarea float-right"
-              >
-    Messages</textarea
-              >
+              ></textarea>
               <br />
-              <button class="btn btn-light float-right">SUBMIT</button>
+              <button type="submit" class="btn btn-light float-right">
+                SUBMIT
+              </button>
             </form>
           </div>
         </div>
       </div>
     </footer>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
     <script src="./js/main.js"></script>
     <script src="./js/blog.js"></script>
+    <script src="./js/contact.js"></script>
   </body>
 </html>

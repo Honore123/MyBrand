@@ -77,9 +77,9 @@ contactForm.addEventListener("submit", function (event) {
               background: "#00b09b",
             },
           }).showToast();
-          setTimeout(() => {
-            window.location.replace("./index.html");
-          }, 1000);
+          names.value = "";
+          email.value = "";
+          message.value = "";
         } else {
           Toastify({
             text: "Error occured while sending message :(",
@@ -99,7 +99,7 @@ contactForm.addEventListener("submit", function (event) {
 });
 
 function validateContent(content) {
-  return content.length >= 8;
+  return content.length >= 3;
 }
 function isValidEmail(email) {
   var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

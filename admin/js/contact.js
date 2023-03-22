@@ -28,9 +28,7 @@ function visitorMessages() {
             </td>
             <td>
               <div class="container-row">
-                <a href="./reply_contact.html?id=${
-                  visitor._id
-                }" class="btn-reply">
+                <a href="mailto:${visitor.visitor_email}" class="btn-reply">
                   <i class="fas fa-reply-all"></i>
                 </a>
                 <button class="btn-delete btn-contact" onclick="deleteMessage('${
@@ -84,18 +82,33 @@ function deleteMessage(messageId) {
   })
     .then((res) => res.json())
     .then((response) => {
-      Toastify({
-        text: "Message deleted successfully",
-        duration: 3000,
-        newWindow: true,
-        close: true,
-        gravity: "top",
-        position: "center",
-        stopOnFocus: true,
-        style: {
-          background: "#00b09b",
-        },
-      }).showToast();
-      visitorMessages();
+      if (response.status == 200) {
+        Toastify({
+          text: "Message deleted successfully",
+          duration: 3000,
+          newWindow: true,
+          close: true,
+          gravity: "top",
+          position: "center",
+          stopOnFocus: true,
+          style: {
+            background: "#00b09b",
+          },
+        }).showToast();
+        visitorMessages();
+      } else {
+        Toastify({
+          text: response.message,
+          duration: 3000,
+          newWindow: true,
+          close: true,
+          gravity: "top",
+          position: "right",
+          stopOnFocus: true,
+          style: {
+            background: "#c20000",
+          },
+        }).showToast();
+      }
     });
 }
