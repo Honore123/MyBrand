@@ -4,7 +4,7 @@ module.exports.index = (req, res) => {
   Inquiry.find()
     .then((inquiries) => {
       res.status(200).json({
-        data: inquiries,
+        data: inquiries.reverse(),
         status: 200,
         message: "Queries fetched successfully",
       });
@@ -56,13 +56,11 @@ module.exports.destroy = (req, res) => {
   const { id } = req.params;
   Inquiry.findByIdAndDelete(id)
     .then((result) => {
-      res
-        .status(200)
-        .json({
-          data: [result],
-          status: 200,
-          message: "Query deleted successfully",
-        });
+      res.status(200).json({
+        data: [result],
+        status: 200,
+        message: "Query deleted successfully",
+      });
     })
     .catch((err) => {
       res
